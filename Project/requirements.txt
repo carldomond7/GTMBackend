@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pydantic
+asyncio
+redis
+uuid
+openai
+tiktoken
+python-multipart
