@@ -92,28 +92,3 @@ async def stream_processed_text_endpoint(unique_id: str):
             yield chunk.encode('utf-8')
 
     return StreamingResponse(streaming_response(), media_type="text/plain")
-
-
-#Solely for VAPI to contact and send transcript to
-@app.post("/process_transcript/")
-async def process_transcript_endpoint(request: Request):
-    unique_id = str(uuid4())
-    data = await request.json()
-    print(json.dumps(data, indent=4))
-    transcript = data.get("message", {}).get("transcript")
-    assistant_id = data.get("message", {}).get("call", {}).get("assistantId", {})
-    print(assistant_id)
-    redis_client.hmset(unique_id, {"transcript": transcript}) #Initializing Redis entry unique ID being associated with transcript
-    redis_client.expire(unique_id, 86400) #Set expiration time
-    make_payload = {"status": "Success", "UUID": unique_id, "Assistant_ID": assistant_id}
-    make_webhook_url = "https://hook.us1.make.com/rna2u29fyv3icgzlime7gaeaahqcmqwk"
-    response = requests.post(make_webhook_url, json=make_payload)
-    if response.status_code == 200:
-        return {"message": "Transcript UUID successfully sent to make."}
-    else:
-        return {
-            "error": "Failed to send Transcript UUID to make.",
-            "statusCode": response.status_code,
-        }
-
-
