@@ -45,7 +45,7 @@ app.add_middleware(
 )
 
 #Returns transcripts stored in Redis
-@app.post("/get_transcript"):
+@app.post("/get_transcript")
 async def get_transcript_endpoint(UUID: Unique_ID):
   #First step is to obtain what was sent from client
   unique_id = UUID.unique_id
