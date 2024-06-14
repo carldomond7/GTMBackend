@@ -38,7 +38,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://gtmhtml.onrender.com"],
+    allow_origins=["http://76.86.142.149"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
