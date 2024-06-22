@@ -38,7 +38,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://gtmproductionfrontend-1.onrender.com"],
+    allow_origins=["https://miles1441.softr.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
